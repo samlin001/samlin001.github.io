@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Media File Type Test</title>
+  <script type="text/javascript"><!--
+    // To list not supported formats.
+    function formatError(mediaFile) {
+      var error_box = document.getElementById('error_box');
+      error_box.style.visibility='visible';
+      var error_list = document.getElementById('format_errors');
+      var error_item = document.createElement('li');
+      var alt = mediaFile.attributes.getNamedItem("alt");
+      error_item.innerHTML = alt.value;
+      error_list.insertBefore(error_item, error_list.firstChild);
+    }
+    //-->
+  </script>
+  <style type="text/css"><!--
+    #error_box {
+      float: right;
+      visibility: hidden;
+      width: 200px;
+      border:solid 1pt;
+      padding: 5px;
+      box-shadow: 5px 5px 3px rgba(50,50,50,0.3);
+      border-radius: 5px;
+    }
+    --></style>
+  </head><body>
+
+  <div id="error_box">
+  <strong>Unsupported Formats</strong><br/>
+  <ul id="format_errors">
+  </ul></div>
+
+  <header>
+    <h1>Image File Formats</h1>
+  </header>
+  <table>
+    <tr><th>Type</th><th>Sample</th><th>Source</th></tr>
+    <tr>
+      <td>TIFF</td>
+      <td><img src="not_kitty.tiff" height="150" width="200" alt="TIFF" onerror="formatError(this)"></a></td>
+      <td><a href="https://source.chromium.org/chromium/chromium/src/+/main:third_party/afl/src/testcases/images/tiff/not_kitty.tiff">not_kitty.tiff</a></td>
+    </tr>
+    <tr>
+      <td>SVG</td>
+      <td><img src="https://upload.wikimedia.org/wikipedia/commons/2/28/Chromium_Logo.svg" height="150" width="200" alt="SVG" onerror="formatError(this)"></a></td>
+      <td><a href="https://commons.wikimedia.org/wiki/File:Chromium_Logo.svg">Chromium_Logo.svg</a></td>
+    </tr>
+    <tr>
+      <td>PSD</td>
+      <td><img src="IDE.psd" height="150" width="200" alt="PSD" onerror="formatError(this)"></a></td>
+      <td><a href="https://cs.android.com/android/platform/superproject/+/master:external/python/cpython3/Mac/Resources/iconsrc/IDE.psd">IDE.psd</a></td>
+    </tr>
+    <tr>
+      <td>AI</td>
+      <td><img src="en_generic_rgb_wo.ai" height="150" width="200" alt="AI" onerror="formatError(this)"></a></td>
+      <td><a href="https://cs.android.com/android/platform/superproject/+/master:frameworks/base/docs/downloads/brand/en_generic_rgb_wo.ai">en_generic_rgb_wo.ai</a></td>
+    </tr>
+    </table>
+
+  <header>
+    <h1>Audio File Formats</h1>
+  </header>
+  <table>
+    <tr><th>Type</th><th>Sample</th><th>Source</th></tr>
+    <tr>
+      <td>AIF</td>
+      <td><audio controls src="balls-of-the-orient.aif" alt="AIF" onerror="formatError(this)"></audio></td>
+      <td><a href="https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/web_tests/http/tests/resources/balls-of-the-orient.aif">balls-of-the-orient.aif</a></td>
+    </tr>
+    <tr>
+      <td>AIFF</td>
+      <td><audio controls src="bear.aiff" alt="AIFF" onerror="formatError(this)"></audio></td>
+      <td><a href="https://source.chromium.org/chromium/chromium/src/+/main:media/test/data/bear.aiff">bear.aiff</a></td>
+    </tr>
+    <tr>
+      <td>WMA</td>
+      <td><audio controls src="SumertimeBlues.wma" alt="WMA" onerror="formatError(this)"></audio></td>
+      <td><a href="https://docpiper.com/tests/audio/audioTest_wma.html">SumertimeBlues.wma</a></td>
+    </tr>
+    <tr>
+      <td>MP3</td>
+      <td><audio controls src="bear-audio-10s-VBR-no-TOC.mp3" alt="MP3" onerror="formatError(this)"></audio></td>
+      <td><a href="https://source.chromium.org/chromium/chromium/src/+/main:media/test/data/bear.aiff">bear-audio-10s-VBR-no-TOC.mp3</a></td>
+    </tr>
+  </table>
+</html>
