@@ -1,21 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-  <title>Media File Type Test</title>
-  <script type="text/javascript"><!--
-    // To list not supported formats.
-    function formatError(mediaFile) {
-      var error_box = document.getElementById('error_box');
-      error_box.style.visibility='visible';
-      var error_list = document.getElementById('format_errors');
-      var error_item = document.createElement('li');
-      var alt = mediaFile.attributes.getNamedItem("alt");
-      error_item.innerHTML = alt.value;
-      error_list.insertBefore(error_item, error_list.firstChild);
-    }
-    //-->
-  </script>
-  <style type="text/css"><!--
+  <title>Media File Formate Test</title>
+  <style type="text/css">
     #error_box {
       float: right;
       visibility: hidden;
@@ -25,17 +12,17 @@
       box-shadow: 5px 5px 3px rgba(50,50,50,0.3);
       border-radius: 5px;
     }
-    --></style>
-  </head><body>
+  </style>
 
+  </head><body>
   <div id="error_box">
-  <strong>Unsupported Formats</strong><br/>
-  <ul id="format_errors">
+    <strong>Unsupported Formats</strong><br/>
+    <ul id="format_errors">
   </ul></div>
 
-  <header>
-    <h1>Image File Formats</h1>
-  </header>
+  <div id="ua_header">User Agent Header</div>
+
+  <h1>Image File Formats</h1>
   <table>
     <tr><th>Type</th><th>Sample</th><th>Source</th></tr>
     <tr>
@@ -86,4 +73,22 @@
       <td><a href="https://source.chromium.org/chromium/chromium/src/+/main:media/test/data/bear-audio-10s-VBR-no-TOC.mp3">bear-audio-10s-VBR-no-TOC.mp3</a></td>
     </tr>
   </table>
+
+  <script>
+    // Shows User Agent Header
+    let userAgentText = "<p>User-agent header: " + navigator.userAgent + "</p>";
+    let userAgentEle = document.getElementById("ua_header");
+    userAgentEle.innerHTML = userAgentText;
+
+    // To list not supported formats.
+    function formatError(mediaFile) {
+      var error_box = document.getElementById('error_box');
+      error_box.style.visibility='visible';
+      var error_list = document.getElementById('format_errors');
+      var error_item = document.createElement('li');
+      var alt = mediaFile.attributes.getNamedItem("alt");
+      error_item.innerHTML = alt.value;
+      error_list.insertBefore(error_item, error_list.firstChild);
+    }
+  </script>
 </html>
