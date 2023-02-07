@@ -6,7 +6,7 @@
     #error_box {
       float: right;
       visibility: hidden;
-      width: 200px;
+      width: 100px;
       border:solid 1pt;
       padding: 5px;
       box-shadow: 5px 5px 3px rgba(50,50,50,0.3);
@@ -27,23 +27,53 @@
     <tr><th>Type</th><th>Sample</th><th>Source</th></tr>
     <tr>
       <td>TIFF</td>
-      <td><img src="image/not_kitty.tiff" height="150" width="200" alt="TIFF" onerror="formatError(this)"></a></td>
+      <td><img src="image/not_kitty.tiff" height="75" width="100" alt="TIFF" onerror="formatError(this)"></a></td>
       <td><a href="https://source.chromium.org/chromium/chromium/src/+/main:third_party/afl/src/testcases/images/tiff/not_kitty.tiff">not_kitty.tiff</a></td>
     </tr>
     <tr>
       <td>SVG</td>
-      <td><img src="https://upload.wikimedia.org/wikipedia/commons/2/28/Chromium_Logo.svg" height="150" width="200" alt="SVG" onerror="formatError(this)"></a></td>
+      <td><img src="https://upload.wikimedia.org/wikipedia/commons/2/28/Chromium_Logo.svg" height="75" width="100" alt="SVG" onerror="formatError(this)"></a></td>
       <td><a href="https://commons.wikimedia.org/wiki/File:Chromium_Logo.svg">Chromium_Logo.svg</a></td>
     </tr>
     <tr>
       <td>PSD</td>
-      <td><img src="image/IDE.psd" height="150" width="200" alt="PSD" onerror="formatError(this)"></a></td>
+      <td><img src="image/IDE.psd" height="75" width="100" alt="PSD" onerror="formatError(this)"></a></td>
       <td><a href="https://cs.android.com/android/platform/superproject/+/master:external/python/cpython3/Mac/Resources/iconsrc/IDE.psd">IDE.psd</a></td>
     </tr>
     <tr>
       <td>AI</td>
-      <td><img src="image/en_generic_rgb_wo.ai" height="150" width="200" alt="AI" onerror="formatError(this)"></a></td>
+      <td><img src="image/en_generic_rgb_wo.ai" height="75" width="100" alt="AI" onerror="formatError(this)"></a></td>
       <td><a href="https://cs.android.com/android/platform/superproject/+/master:frameworks/base/docs/downloads/brand/en_generic_rgb_wo.ai">en_generic_rgb_wo.ai</a></td>
+    </tr>
+    <tr>
+      <td>JPG</td>
+      <td><img src="image/baseline_jpeg.jpg" height="75" width="100" alt="JPG" onerror="formatError(this)"></a></td>
+      <td><a href="https://cs.android.com/android/platform/superproject/+/master:cts/tests/tests/graphics/res/drawable/baseline_jpeg.jpg">baseline_jpeg.jpg</a></td>
+    </tr>
+    <tr>
+      <td>PNG</td>
+      <td><img src="image/alpha.png" height="31" width="31" alt="PNG" onerror="formatError(this)"></a></td>
+      <td><a href="https://cs.android.com/android/platform/superproject/+/master:cts/tests/tests/graphics/res/drawable/alpha.png">alpha.png</a></td>
+    </tr>
+    <tr>
+      <td>GIF</td>
+      <td><img src="image/animated.gif" height="91" width="139" alt="GIF" onerror="formatError(this)"></a></td>
+      <td><a href="https://cs.android.com/android/platform/superproject/+/master:cts/tests/tests/graphics/res/drawable/animated.gif">animated.gif</a></td>
+    </tr>
+    <tr>
+      <td>BMP</td>
+      <td><img src="image/bmp_test.bmp" height="75" width="100" alt="BMP" onerror="formatError(this)"></a></td>
+      <td><a href="https://cs.android.com/android/platform/superproject/+/master:cts/tests/tests/graphics/res/drawable/bmp_test.bmp">bmp_test.bmp</a></td>
+    </tr>
+    <tr>
+      <td>WEBP</td>
+      <td><img src="image/webp_test.webp" height="75" width="100" alt="WEBP" onerror="formatError(this)"></a></td>
+      <td><a href="https://cs.android.com/android/platform/superproject/+/master:cts/tests/tests/graphics/res/drawable/webp_test.webp">webp_test.webp</a></td>
+    </tr>
+    <tr>
+      <td>ICO</td>
+      <td><img src="image/google_chrome.ico" height="64" width="64" alt="ICO" onerror="formatError(this)"></a></td>
+      <td><a href="https://cs.android.com/android/platform/superproject/+/master:cts/tests/tests/graphics/res/drawable/google_chrome.ico">google_chrome.ico</a></td>
     </tr>
     </table>
 
@@ -54,8 +84,8 @@
     <tr><th>Type</th><th>Sample</th><th>Source</th></tr>
     <tr>
       <td>AIF</td>
-      <td><audio controls src="audio/balls-of-the-orient.aif" alt="AIF" onerror="formatError(this)"></audio></td>
-      <td><a href="https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/web_tests/http/tests/resources/balls-of-the-orient.aif">balls-of-the-orient.aif</a></td>
+      <td><audio controls src="audio/Undock.aif" alt="AIF" onerror="formatError(this)"></audio></td>
+      <td><a href="https://cs.android.com/android/platform/superproject/+/master:frameworks/base/data/sounds/effects/Undock.aif">Undock.aif</a></td>
     </tr>
     <tr>
       <td>AIFF</td>
@@ -71,6 +101,16 @@
       <td>MP3</td>
       <td><audio controls src="audio/bear-audio-10s-VBR-no-TOC.mp3" alt="MP3" onerror="formatError(this)"></audio></td>
       <td><a href="https://source.chromium.org/chromium/chromium/src/+/main:media/test/data/bear-audio-10s-VBR-no-TOC.mp3">bear-audio-10s-VBR-no-TOC.mp3</a></td>
+    </tr>
+    <tr>
+      <td>WAV</td>
+      <td><audio controls src="audio/Lock.wav" alt="WAV" onerror="formatError(this)"></audio></td>
+      <td><a href="https://cs.android.com/android/platform/superproject/+/master:frameworks/base/data/sounds/effects/Lock.wav">Lock.wav</a></td>
+    </tr>
+    <tr>
+      <td>OGG</td>
+      <td><audio controls src="audio/Undock.ogg" alt="OGG" onerror="formatError(this)"></audio></td>
+      <td><a href="https://cs.android.com/android/platform/superproject/+/master:frameworks/base/data/sounds/effects/Undock.ogg">Undock.ogg</a></td>
     </tr>
   </table>
 
