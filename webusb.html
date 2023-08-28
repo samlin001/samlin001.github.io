@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>WebUSB test app</title>
+  </head>
+
+<body>
+  <script>
+
+var webUsbDevice = {};
+(function() {
+  'use strict';
+
+  webUsbDevice.getDevices = function() {
+    return navigator.usb.getDevices().then(devices => {
+      return devices.map(device => new webUsbDevice.Device(device));
+    });
+  };
+
+  webUsbDevice.requestDevice = function() {
+    const filters = [
+      { 'vendorId': 0x0BDA, 'productId': 0x8153 },
+      { 'vendorId': 0x18D1, 'productId': 0x4EE7 },
+      { 'vendorId': 0x0BDA, 'productId': 0x0129 },
+      { 'vendorId': 0x046D, 'productId': 0xC077 },
+      { 'vendorId': 0x0424, 'productId': 0xCF18 },
+      { 'vendorId': 0x04D8, 'productId': 0x00DF }, // { 'vendorId': 1240, 'productId': 223 },
+      { 'vendorId': 0x13b1, 'productId': 0x0041 },
+      { 'vendorId': 0x0A12, 'productId': 0x0003 }, // { 'vendorId': 2578, 'productId': 3 },
+      { 'vendorId': 0x0424, 'productId': 0x9E08 }, // { 'vendorId': 1060, 'productId': 53016 },
+    ];
+    return navigator.usb.requestDevice({ 'filters': filters }).then(
+      device => new webUsbDevice.Device(device)
+    );
+  }
+
+  webUsbDevice.Device = function(device) {
+    this.device_ = device;
+  };
+
+  webUsbDevice.Device.prototype.connect = function() {
+    return this.device_.open()
+        .then(() => {
+          if (this.device_.configuration === null) {
+            return this.device_.selectConfiguration(1);
+          }
+        })
+        .then(() => this.device_.claimInterface(0))
+        .then(() => {
+          alert("Connected!");
+          console.log("Connected");
+        })
+        .catch(err => alert(err.message));
+  };
+
+  webUsbDevice.Device.prototype.disconnect = function() {
+    return this.device_.close();
+  };
+})();
+
+let usbDevice;
+
+function connect() {
+  usbDevice.connect();
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+    let devices = await navigator.usb.getDevices();
+    devices.forEach(device => {
+      alert(device.productName);
+    });
+  });
+
+window.onload = _ => {
+  document.querySelector("#connectBtn").onclick = function() {
+    webUsbDevice.requestDevice().then(uDevice => {
+      usbDevice = uDevice;
+      connect();
+    });
+  }
+}
+
+</script>
+ <button id="connectBtn" style="visibility: initial">Connect to a usb host device</button>
+</body>
