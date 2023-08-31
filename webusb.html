@@ -7,7 +7,11 @@
 <body>
   <script>
 
+// https://developer.chrome.com/articles/usb/
+// https://wicg.github.io/webusb/#usbdevice
 var webUsbDevice = {};
+var connectedUsbDeviceFilters = [];
+var connectedUsbDeviceInfo = [];
 (function() {
   'use strict';
 
@@ -17,19 +21,9 @@ var webUsbDevice = {};
     });
   };
 
+  // https://wicg.github.io/webusb/#dom-usb-requestdevice
   webUsbDevice.requestDevice = function() {
-    const filters = [
-      { 'vendorId': 0x0BDA, 'productId': 0x8153 },
-      { 'vendorId': 0x18D1, 'productId': 0x4EE7 },
-      { 'vendorId': 0x0BDA, 'productId': 0x0129 },
-      { 'vendorId': 0x046D, 'productId': 0xC077 },
-      { 'vendorId': 0x0424, 'productId': 0xCF18 },
-      { 'vendorId': 0x04D8, 'productId': 0x00DF }, // { 'vendorId': 1240, 'productId': 223 },
-      { 'vendorId': 0x13b1, 'productId': 0x0041 },
-      { 'vendorId': 0x0A12, 'productId': 0x0003 }, // { 'vendorId': 2578, 'productId': 3 },
-      { 'vendorId': 0x0424, 'productId': 0x9E08 }, // { 'vendorId': 1060, 'productId': 53016 },
-    ];
-    return navigator.usb.requestDevice({ 'filters': filters }).then(
+    return navigator.usb.requestDevice({ 'filters': connectedUsbDeviceFilters }).then(
       device => new webUsbDevice.Device(device)
     );
   }
@@ -67,8 +61,20 @@ function connect() {
 document.addEventListener('DOMContentLoaded', async () => {
     let devices = await navigator.usb.getDevices();
     devices.forEach(device => {
-      alert(device.productName);
+      connectedUsbDeviceFilters.push({'vendorId': device.vendorId,
+                                      'productId': device.productId,
+                                      'classCode': device.deviceClass});
+      connectedUsbDeviceInfo.push(device.manufacturerName);
+      connectedUsbDeviceInfo.push(device.productName);
+      connectedUsbDeviceInfo.push("vendorId=");
+      connectedUsbDeviceInfo.push(device.vendorId);
+      connectedUsbDeviceInfo.push('productId=');
+      connectedUsbDeviceInfo.push(device.productId);
+      connectedUsbDeviceInfo.push('classCode=');
+      connectedUsbDeviceInfo.push(device.deviceClass);
+      connectedUsbDeviceInfo.push('\n');
     });
+    alert(connectedUsbDeviceInfo.join(" "));
   });
 
 window.onload = _ => {
