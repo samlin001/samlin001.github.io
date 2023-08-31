@@ -3,89 +3,92 @@
   <head>
     <title>WebUSB test app</title>
   </head>
+  <body>
+    <script>
+      var webUsbDevice = {};
+      var connectedUsbDeviceFilters = [];
+      var connectedUsbDeviceInfo = [];
 
-<body>
-  <script>
+      (function() {
+        webUsbDevice.getDevices = function() {
+          return navigator.usb.getDevices().then(devices => {
+            return devices.map(device => new webUsbDevice.Device(device));
+          });
+        };
 
-// https://developer.chrome.com/articles/usb/
-// https://wicg.github.io/webusb/#usbdevice
-var webUsbDevice = {};
-var connectedUsbDeviceFilters = [];
-var connectedUsbDeviceInfo = [];
-(function() {
-  'use strict';
+        webUsbDevice.requestDevice = function() {
+          return navigator.usb.requestDevice({ 'filters': connectedUsbDeviceFilters })
+            .then(device => new webUsbDevice.Device(device));
+        };
 
-  webUsbDevice.getDevices = function() {
-    return navigator.usb.getDevices().then(devices => {
-      return devices.map(device => new webUsbDevice.Device(device));
-    });
-  };
+        webUsbDevice.Device = function(device) {
+          this.device_ = device;
+        };
 
-  // https://wicg.github.io/webusb/#dom-usb-requestdevice
-  webUsbDevice.requestDevice = function() {
-    return navigator.usb.requestDevice({ 'filters': connectedUsbDeviceFilters }).then(
-      device => new webUsbDevice.Device(device)
-    );
-  }
+        webUsbDevice.Device.prototype.connect = function() {
+          return this.device_.open()
+            .then(() => {
+              for (let i = 0; i < this.device_.configurations.length; i++) {
+                console.log("configrating: ", i);
+                this.device_.selectConfiguration(i+1)
+                  .then(() => {
+                    for (let j = 0; j < this.device_.configurations[i].interfaces.length; j++) {
+                      console.log("claiming I/F: ", j);
+                      this.device_.claimInterface(j)
+                        .then(() => { alert("Connected!");})
+                        .catch(err => alert(err.message));
+                    }
+                  })
+                  .catch(err => alert(err.message));
+              }
+            })
+            .catch(err => alert(err.message));
+        };
 
-  webUsbDevice.Device = function(device) {
-    this.device_ = device;
-  };
+        webUsbDevice.Device.prototype.disconnect = function() {
+          return this.device_.close();
+        };
+      })();
 
-  webUsbDevice.Device.prototype.connect = function() {
-    return this.device_.open()
-        .then(() => {
-          if (this.device_.configuration === null) {
-            return this.device_.selectConfiguration(1);
-          }
-        })
-        .then(() => this.device_.claimInterface(0))
-        .then(() => {
-          alert("Connected!");
-          console.log("Connected");
-        })
-        .catch(err => alert(err.message));
-  };
+      // Creates a connected device filter to request device
+      document.addEventListener('DOMContentLoaded', async () => {
+          // Always filter Google's ID, e.g for Pixel phones
+          connectedUsbDeviceFilters.push({'vendorId': 0x18D1});
+          // https://developer.chrome.com/articles/usb/
+          let devices = await navigator.usb.getDevices();
+          devices.forEach(device => {
+            connectedUsbDeviceFilters.push({'vendorId': device.vendorId});
 
-  webUsbDevice.Device.prototype.disconnect = function() {
-    return this.device_.close();
-  };
-})();
+            // https://wicg.github.io/webusb/#usbdevice
+            connectedUsbDeviceInfo.push(device.manufacturerName);
+            connectedUsbDeviceInfo.push(device.productName);
+            connectedUsbDeviceInfo.push("vendorId=");
+            connectedUsbDeviceInfo.push(device.vendorId);
+            connectedUsbDeviceInfo.push('productId=');
+            connectedUsbDeviceInfo.push(device.productId);
+            connectedUsbDeviceInfo.push('\n');
+          });
+          alert(connectedUsbDeviceInfo.join(" "));
+        });
 
-let usbDevice;
+      window.onload = _ => {
+        document.querySelector("#connectBtn").onclick = function() {
+          webUsbDevice.requestDevice()
+            .then(usbDevice => {
+              usbDevice.connect();
+            })
+            .catch(err => { console.error(err); });
+        }
+      }
 
-function connect() {
-  usbDevice.connect();
-}
-
-document.addEventListener('DOMContentLoaded', async () => {
-    let devices = await navigator.usb.getDevices();
-    devices.forEach(device => {
-      connectedUsbDeviceFilters.push({'vendorId': device.vendorId,
-                                      'productId': device.productId,
-                                      'classCode': device.deviceClass});
-      connectedUsbDeviceInfo.push(device.manufacturerName);
-      connectedUsbDeviceInfo.push(device.productName);
-      connectedUsbDeviceInfo.push("vendorId=");
-      connectedUsbDeviceInfo.push(device.vendorId);
-      connectedUsbDeviceInfo.push('productId=');
-      connectedUsbDeviceInfo.push(device.productId);
-      connectedUsbDeviceInfo.push('classCode=');
-      connectedUsbDeviceInfo.push(device.deviceClass);
-      connectedUsbDeviceInfo.push('\n');
-    });
-    alert(connectedUsbDeviceInfo.join(" "));
-  });
-
-window.onload = _ => {
-  document.querySelector("#connectBtn").onclick = function() {
-    webUsbDevice.requestDevice().then(uDevice => {
-      usbDevice = uDevice;
-      connect();
-    });
-  }
-}
-
-</script>
- <button id="connectBtn" style="visibility: initial">Connect to a usb host device</button>
-</body>
+    </script>
+    <button id="connectBtn" style="visibility: initial">Connect to a usb host device</button>
+    <ul>
+      <li>chrome://usb-internal</li>
+      <li>chrome://device-log</li>
+      <li><a href="https://developer.chrome.com/articles/usb/">Access USB Devices on the Web</a></li>
+      <li><a href="https://wicg.github.io/webusb/#usbinterface-interface">WebUSB USBInterface isProtectedClass</a></li>
+      <li><a href="https://www.usb.org/defined-class-codes">USB device class codes</a></li>
+    </ul>
+  </body>
+</html>
