@@ -52,8 +52,19 @@
 
       // Creates a connected device filter to request device
       document.addEventListener('DOMContentLoaded', async () => {
-          // Always filter Google's ID, e.g for Pixel phones
+          // Always filter these vendor IDs
+          // Google
           connectedUsbDeviceFilters.push({'vendorId': 0x18D1});
+          // ASUS
+          connectedUsbDeviceFilters.push({'vendorId': 0x0B05});
+          // Apple
+          connectedUsbDeviceFilters.push({'vendorId': 0x05AC});
+          // Microchip
+          connectedUsbDeviceFilters.push({'vendorId': 0x0424});
+          connectedUsbDeviceFilters.push({'vendorId': 0x04D8});
+          // Cambridge Silicon Radio, Ltd
+          connectedUsbDeviceFilters.push({'vendorId': 0x0A12});
+
           // https://developer.chrome.com/articles/usb/
           let devices = await navigator.usb.getDevices();
           devices.forEach(device => {
