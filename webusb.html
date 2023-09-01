@@ -8,6 +8,28 @@
       var webUsbDevice = {};
       var connectedUsbDeviceFilters = [];
       var connectedUsbDeviceInfo = [];
+      var ifClassMap = new Map();
+      // https://www.usb.org/defined-class-codes
+      ifClassMap.set(0, 'Device');
+      ifClassMap.set(1, 'Audio');
+      ifClassMap.set(2, 'Communication');
+      ifClassMap.set(3, 'HID');
+      ifClassMap.set(5, 'Physical');
+      ifClassMap.set(6, 'Still Imaging');
+      ifClassMap.set(7, 'Printer');
+      ifClassMap.set(8, 'Mass Storage');
+      ifClassMap.set(9, 'Hub');
+      ifClassMap.set(0x0a, 'CDC-Data');
+      ifClassMap.set(0x0b, 'Smart Card');
+      ifClassMap.set(0x0d, 'Content Security');
+      ifClassMap.set(0x0e, 'Video');
+      ifClassMap.set(0x0f, 'Personal Healthcare');
+      ifClassMap.set(0x10, 'Audio/Video');
+      ifClassMap.set(0xdc, 'Diagnostic Device');
+      ifClassMap.set(0xe0, 'Wireless Controller');
+      ifClassMap.set(0xef, 'Miscellaneous');
+      ifClassMap.set(0xfe, 'Application Specific');
+      ifClassMap.set(0xff, 'Vendor Specific');
 
       (function() {
         webUsbDevice.getDevices = function() {
@@ -40,8 +62,8 @@
                       var interface = configuration.interfaces[j];
                       var iNo = interface.interfaceNumber;
                       var altIf = interface.alternate;
-                      output(`claimInterface: ${iNo}, class: ${interface.interfaceClass} `+
-                          `${interface.interfaceName}`);
+                      output(`claimInterface: ${iNo}, class: ${ifClassMap.get(altIf.interfaceClass)}, ${altIf.interfaceClass},`+
+                          `${altIf.interfaceSubclass}, ${altIf.interfaceProtocol} ${altIf.interfaceName}`);
                       this.device_.claimInterface(iNo)
                         .then(() => { output("interface claimed!");})
                         .catch(err => output(err.message));
