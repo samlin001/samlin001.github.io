@@ -98,6 +98,12 @@
           connectedUsbDeviceFilters.push({'vendorId': 0x04D8});
           // Cambridge Silicon Radio, Ltd
           connectedUsbDeviceFilters.push({'vendorId': 0x0A12});
+          // Logitech
+          connectedUsbDeviceFilters.push({'vendorId': 0x046D});
+          // Realtek
+          connectedUsbDeviceFilters.push({'vendorId': 0x0BDA});
+          // Generic
+          connectedUsbDeviceFilters.push({'vendorId': 0x0BDA});
 
           // https://developer.chrome.com/articles/usb/
           let devices = await navigator.usb.getDevices();
