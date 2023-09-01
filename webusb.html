@@ -28,27 +28,39 @@
         webUsbDevice.Device.prototype.connect = function() {
           return this.device_.open()
             .then(() => {
-              for (let i = 0; i < this.device_.configurations.length; i++) {
-                console.log("configrating: ", i);
-                this.device_.selectConfiguration(i+1)
+              var device = this.device_;
+              output(`open: ${device.productName}, class: ${device.deviceClass}`);
+              for (let i = 0; i < device.configurations.length; i++) {
+                var configuration = this.device_.configurations[i];
+                var cNo = configuration.configurationValue;
+                output(`selectConfiguration: ${cNo}, ${configuration.configurationName}`);
+                this.device_.selectConfiguration(cNo)
                   .then(() => {
-                    for (let j = 0; j < this.device_.configurations[i].interfaces.length; j++) {
-                      console.log("claiming I/F: ", j);
-                      this.device_.claimInterface(j)
-                        .then(() => { alert("Connected!");})
-                        .catch(err => alert(err.message));
+                    for (let j = 0; j < configuration.interfaces.length; j++) {
+                      var interface = configuration.interfaces[j];
+                      var iNo = interface.interfaceNumber;
+                      var altIf = interface.alternate;
+                      output(`claimInterface: ${iNo}, class: ${interface.interfaceClass} `+
+                          `${interface.interfaceName}`);
+                      this.device_.claimInterface(iNo)
+                        .then(() => { output("interface claimed!");})
+                        .catch(err => output(err.message));
                     }
-                  })
-                  .catch(err => alert(err.message));
+                  }).catch(err => output(err.message));
               }
-            })
-            .catch(err => alert(err.message));
+            }).catch(err => output(err.message));
         };
 
         webUsbDevice.Device.prototype.disconnect = function() {
           return this.device_.close();
         };
       })();
+
+      function output(message) {
+        var outputElement = document.getElementById('output');
+        outputElement.appendChild(document.createElement('br'));
+        outputElement.appendChild(document.createTextNode(message));
+      }
 
       // Creates a connected device filter to request device
       document.addEventListener('DOMContentLoaded', async () => {
@@ -71,15 +83,9 @@
             connectedUsbDeviceFilters.push({'vendorId': device.vendorId});
 
             // https://wicg.github.io/webusb/#usbdevice
-            connectedUsbDeviceInfo.push(device.manufacturerName);
-            connectedUsbDeviceInfo.push(device.productName);
-            connectedUsbDeviceInfo.push("vendorId=");
-            connectedUsbDeviceInfo.push(device.vendorId);
-            connectedUsbDeviceInfo.push('productId=');
-            connectedUsbDeviceInfo.push(device.productId);
-            connectedUsbDeviceInfo.push('\n');
+            output(`${device.manufacturerName} ${device.productName} vendorId=0x${device.vendorId.toString(16)} ` +
+               `productId=0x${device.productId.toString(16)}`);
           });
-          alert(connectedUsbDeviceInfo.join(" "));
         });
 
       window.onload = _ => {
@@ -88,7 +94,7 @@
             .then(usbDevice => {
               usbDevice.connect();
             })
-            .catch(err => { console.error(err); });
+            .catch(err => { output(err); });
         }
       }
 
@@ -101,5 +107,7 @@
       <li><a href="https://wicg.github.io/webusb/#usbinterface-interface">WebUSB USBInterface isProtectedClass</a></li>
       <li><a href="https://www.usb.org/defined-class-codes">USB device class codes</a></li>
     </ul>
+    <h1>Output:</h1>
+    <p id="output"></p>
   </body>
 </html>
