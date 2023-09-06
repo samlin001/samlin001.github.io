@@ -111,7 +111,8 @@
           connectedUsbDeviceFilters.push({'vendorId': 0x13B1});
           connectedUsbDeviceFilters.push({'vendorId': 0x0781});
           connectedUsbDeviceFilters.push({'vendorId': 0x1050});
-        
+          // Samsung
+          connectedUsbDeviceFilters.push({'vendorId': 0x04E8});
 
           // https://developer.chrome.com/articles/usb/
           let devices = await navigator.usb.getDevices();
