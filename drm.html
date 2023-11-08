@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>DRM test app</title>
+  </head>
+  <body>
+    <h1>Output:</h1>
+    <p id="output"></p>
+    <script>
+        var mk = navigator.requestMediaKeySystemAccess;
+        if (mk) {
+          chkCodec('video/mp4; codecs="avc1.42E01E"');
+          chkCodec('video/webm; codecs="vp8"');
+          chkCodec('video/webm; codecs="vp09.00.10.08"');
+        }
+
+      function chkCodec(codec) {
+        // check if a codec is supported
+        if (MediaSource.isTypeSupported(codec)){
+          output(codec + " is supported");
+        } else {
+          output(codec + " is not supported");
+        }
+
+        // requestMediaKeySystemAccess
+        // https://github.com/shaka-project/shaka-player/blob/c3beee6f2a5dd929da2549ebeef1ee5018beafad/lib/media/drm_engine.js#L1856
+        // https://developer.mozilla.org/en-US/docs/Web/API/Navigator/requestMediaKeySystemAccess
+        var keySys = "com.widevine.alpha";
+        var drmRobustness = "SW_SECURE_DECODE";  // Widevine L3
+        const config = [{
+                initDataTypes: ['cenc'],
+                videoCapabilities: [{
+                    contentType: codec,
+                    // robustness: drmRobustness fails on emu
+                    robustness: ""
+                }]
+            }];
+        var support = navigator.requestMediaKeySystemAccess(keySys, config)
+            .then((function(mediaKeySystemAccess) {
+                      output("");
+                      output("contentType: " + codec);
+                      output(`requestMediaKeySystemAccess for ${keySys} successfully.`);
+                      var mediaKeySystemConfiguration = mediaKeySystemAccess.getConfiguration();
+                      return null == mediaKeySystemAccess ? void 0 : mediaKeySystemAccess.createMediaKeys();
+                  }
+                  )).catch((function() {
+                      output("");
+                      output("contentType: " + codec);
+                      output(`requestMediaKeySystemAccess for ${keySys} failed.`);
+                      return !1
+                  }
+                  ));
+
+        // check by decodingInfo
+        // https://developer.chrome.com/blog/media-updates-in-chrome-62/
+        // https://developer.chrome.com/blog/media-updates-in-chrome-75/
+        const encryptedMediaConfig = {
+          type: 'media-source',
+          video: {
+            contentType: codec,
+            width: 1920,
+            height: 1080,
+            bitrate: 2646242, // number of bits used to encode a second of video
+            framerate: '25' // number of frames used in one second
+            
+          },
+          keySystemConfiguration: {
+            keySystem: keySys,
+            videoRobustness: drmRobustness
+          }};
+        decodingInfo(encryptedMediaConfig);
+      }
+
+      function decodingInfo(config) {
+          navigator.mediaCapabilities.decodingInfo(config).then(result => {
+          output("");
+          output(`For ${config.video.contentType} with ${config.keySystemConfiguration.keySystem} @ ${config.keySystemConfiguration.videoRobustness}`);
+            if (!result.supported) {
+            output('Argh! This encrypted media configuration is not supported.');
+            return;
+          }
+
+          if (!result.keySystemAccess) {
+            output('Argh! Encrypted media support is not available.')
+            return;
+          }
+
+          output('This encrypted media configuration is supported.\n' +
+              'Playback should be' +
+              (result.smooth ? '' : ' NOT') + ' smooth and' +
+              (result.powerEfficient ? '' : ' NOT') + ' power efficient.');
+
+          // TODO: Use `result.keySystemAccess.createMediaKeys()` to setup EME playback.
+         });
+        }
+
+        function output(message) {
+            var outputElement = document.getElementById('output');
+            outputElement.appendChild(document.createElement('br'));
+            outputElement.appendChild(document.createTextNode(message));
+        }
+    </script>
+  </body>
+</html>
