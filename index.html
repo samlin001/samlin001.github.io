@@ -1,147 +1,113 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-  <head>
-  <title>Media File Formate Test</title>
-  <style type="text/css">
-    #error_box {
-      float: right;
-      visibility: hidden;
-      width: 100px;
-      border:solid 1pt;
-      padding: 5px;
-      box-shadow: 5px 5px 3px rgba(50,50,50,0.3);
-      border-radius: 5px;
-    }
-  </style>
-
-  </head><body>
-  <div id="error_box">
-    <strong>Unsupported Formats</strong><br/>
-    <ul id="format_errors">
-  </ul></div>
-
-  <div id="ua_header">User Agent Header</div>
-
-  <h1><a href="https://developer.android.com/training/app-links/deep-linking">Deep Links</a></h1>
-
-  <ul>
-    <li><a href="https://play.google.com/store/apps/details?id=com.chrome.beta"> Chrome Beta on Play Store </a></li>
+  <link href="css/cards.css" rel="stylesheet" type="text/css" />
+  <ul class="cards">
     <li>
-      <a href="https://developers.google.com/maps/documentation/urls/get-started#forming-the-url"> Launching Google Maps by a URL: </a>
-      <a href="https://www.google.com/maps/search/?api=1&query=centurylink+field"> Century Link </a>
-     </li>
-
-     <li><a href="geo:0,0?q=1600+Amphitheatre+Parkway%2C+CA"> geo: 1600 Amphitheatre Parkway,CA </a></li>
-     <li><a href="tel:123456789"> tel:123456789 </a></li>
+      <a href="ready2go.html" class="card">
+        <img src="https://i.imgur.com/oYiTqum.jpg" class="card__image"/>
+        <div class="card__overlay">
+          <div class="card__header">
+            <svg class="card__arc" xmlns="http://www.w3.org/2000/svg"> <path /> </svg>
+            <img
+              class="card__thumb"
+              src="https://i.imgur.com/uE0gE5R.jpeg"
+            />
+            <div class="card__header-text">
+              <h3 class="card__title">Ready 2 Go</h3>
+            </div>
+          </div>
+          <p class="card__description">
+            Order your cup of coffee & navigate to your next destination.
+          </p>
+        </div>
+      </a>
+    </li>
+    <li>
+      <a href="waiting.html" class="card">
+        <img src="https://inspgr.id/app/uploads/2019/03/art-shkret-05.jpg" class="card__image"/>
+        <div class="card__overlay">
+          <div class="card__header">
+            <svg class="card__arc" xmlns="http://www.w3.org/2000/svg"> <path /> </svg>
+            <img
+              class="card__thumb"
+              src="https://i.imgur.com/LTUNQcr.jpeg"
+            />
+            <div class="card__header-text">
+              <h3 class="card__title">Waiting with fun</h3>
+            </div>
+          </div>
+          <p class="card__description">
+            Have fun watching YouTube & Instagram while waiting.
+          </p>
+        </div>
+      </a>
+    </li>
+    <li>
+      <a href="drm.html" class="card">
+        <img src="https://inspgr.id/app/uploads/2019/03/art-shkret-01.jpg" class="card__image"/>
+        <div class="card__overlay">
+          <div class="card__header">
+            <svg class="card__arc" xmlns="http://www.w3.org/2000/svg"> <path /> </svg>
+            <img
+              class="card__thumb"
+              src="https://i.imgur.com/II1N13N.jpeg"
+            />
+            <div class="card__header-text">
+              <h3 class="card__title">DRM support</h3>
+            </div>
+          </div>
+          <p class="card__description">
+            Check out DRM support.
+          </p>
+        </div>
+      </a>
+    </li>
+    <li>
+      <a href="media.html" class="card">
+        <img src="https://inspgr.id/app/uploads/2019/03/art-shkret-02.jpg" class="card__image"/>
+        <div class="card__overlay">
+          <div class="card__header">
+            <svg class="card__arc" xmlns="http://www.w3.org/2000/svg"> <path /> </svg>
+            <img
+              class="card__thumb"
+              src="https://i.imgur.com/Jcw7h57.jpeg"
+            />
+            <div class="card__header-text">
+              <h3 class="card__title">Supported Media Types</h3>
+            </div>
+          </div>
+          <p class="card__description">
+            Checkout what media file supported by this browser.
+          </p>
+        </div>
+      </a>
+    </li>
+    <li>
+      <a href="webusb.html" class="card">
+        <img src="https://inspgr.id/app/uploads/2019/03/art-shkret-08.jpg" class="card__image"/>
+        <div class="card__overlay">
+          <div class="card__header">
+            <svg class="card__arc" xmlns="http://www.w3.org/2000/svg"> <path /> </svg>
+            <img
+              class="card__thumb"
+              src="https://inspgr.id/app/uploads/2019/03/art-shkret-07.jpg"
+            />
+            <div class="card__header-text">
+              <h3 class="card__title">Test WEB USB</h3>
+            </div>
+          </div>
+          <p class="card__description">
+            Checkout connected WEB USB devices.
+          </p>
+        </div>
+      </a>
+    </li>
   </ul>
 
-  <h1>Image File Formats</h1>
-  <table>
-    <tr><th>Type</th><th>Sample</th><th>Source</th></tr>
-    <tr>
-      <td>TIFF</td>
-      <td><img src="image/not_kitty.tiff" height="75" width="100" alt="TIFF" onerror="formatError(this)"></a></td>
-      <td><a href="https://source.chromium.org/chromium/chromium/src/+/main:third_party/afl/src/testcases/images/tiff/not_kitty.tiff">not_kitty.tiff</a></td>
-    </tr>
-    <tr>
-      <td>SVG</td>
-      <td><img src="https://upload.wikimedia.org/wikipedia/commons/2/28/Chromium_Logo.svg" height="75" width="100" alt="SVG" onerror="formatError(this)"></a></td>
-      <td><a href="https://commons.wikimedia.org/wiki/File:Chromium_Logo.svg">Chromium_Logo.svg</a></td>
-    </tr>
-    <tr>
-      <td>PSD</td>
-      <td><img src="image/IDE.psd" height="75" width="100" alt="PSD" onerror="formatError(this)"></a></td>
-      <td><a href="https://cs.android.com/android/platform/superproject/+/master:external/python/cpython3/Mac/Resources/iconsrc/IDE.psd">IDE.psd</a></td>
-    </tr>
-    <tr>
-      <td>AI</td>
-      <td><img src="image/en_generic_rgb_wo.ai" height="75" width="100" alt="AI" onerror="formatError(this)"></a></td>
-      <td><a href="https://cs.android.com/android/platform/superproject/+/master:frameworks/base/docs/downloads/brand/en_generic_rgb_wo.ai">en_generic_rgb_wo.ai</a></td>
-    </tr>
-    <tr>
-      <td>JPG</td>
-      <td><img src="image/baseline_jpeg.jpg" height="75" width="100" alt="JPG" onerror="formatError(this)"></a></td>
-      <td><a href="https://cs.android.com/android/platform/superproject/+/master:cts/tests/tests/graphics/res/drawable/baseline_jpeg.jpg">baseline_jpeg.jpg</a></td>
-    </tr>
-    <tr>
-      <td>PNG</td>
-      <td><img src="image/alpha.png" height="31" width="31" alt="PNG" onerror="formatError(this)"></a></td>
-      <td><a href="https://cs.android.com/android/platform/superproject/+/master:cts/tests/tests/graphics/res/drawable/alpha.png">alpha.png</a></td>
-    </tr>
-    <tr>
-      <td>GIF</td>
-      <td><img src="image/animated.gif" height="91" width="139" alt="GIF" onerror="formatError(this)"></a></td>
-      <td><a href="https://cs.android.com/android/platform/superproject/+/master:cts/tests/tests/graphics/res/drawable/animated.gif">animated.gif</a></td>
-    </tr>
-    <tr>
-      <td>BMP</td>
-      <td><img src="image/bmp_test.bmp" height="75" width="100" alt="BMP" onerror="formatError(this)"></a></td>
-      <td><a href="https://cs.android.com/android/platform/superproject/+/master:cts/tests/tests/graphics/res/drawable/bmp_test.bmp">bmp_test.bmp</a></td>
-    </tr>
-    <tr>
-      <td>WEBP</td>
-      <td><img src="image/webp_test.webp" height="75" width="100" alt="WEBP" onerror="formatError(this)"></a></td>
-      <td><a href="https://cs.android.com/android/platform/superproject/+/master:cts/tests/tests/graphics/res/drawable/webp_test.webp">webp_test.webp</a></td>
-    </tr>
-    <tr>
-      <td>ICO</td>
-      <td><img src="image/google_chrome.ico" height="64" width="64" alt="ICO" onerror="formatError(this)"></a></td>
-      <td><a href="https://cs.android.com/android/platform/superproject/+/master:cts/tests/tests/graphics/res/drawable/google_chrome.ico">google_chrome.ico</a></td>
-    </tr>
-    </table>
-
-  <header>
-    <h1>Audio File Formats</h1>
-  </header>
-  <table>
-    <tr><th>Type</th><th>Sample</th><th>Source</th></tr>
-    <tr>
-      <td>AIF</td>
-      <td><audio controls src="audio/Undock.aif" alt="AIF" onerror="formatError(this)"></audio></td>
-      <td><a href="https://cs.android.com/android/platform/superproject/+/master:frameworks/base/data/sounds/effects/Undock.aif">Undock.aif</a></td>
-    </tr>
-    <tr>
-      <td>AIFF</td>
-      <td><audio controls src="audio/bear.aiff" alt="AIFF" onerror="formatError(this)"></audio></td>
-      <td><a href="https://source.chromium.org/chromium/chromium/src/+/main:media/test/data/bear.aiff">bear.aiff</a></td>
-    </tr>
-    <tr>
-      <td>WMA</td>
-      <td><audio controls src="audio/SumertimeBlues.wma" alt="WMA" onerror="formatError(this)"></audio></td>
-      <td><a href="https://docpiper.com/tests/audio/audioTest_wma.html">SumertimeBlues.wma</a></td>
-    </tr>
-    <tr>
-      <td>MP3</td>
-      <td><audio controls src="audio/bear-audio-10s-VBR-no-TOC.mp3" alt="MP3" onerror="formatError(this)"></audio></td>
-      <td><a href="https://source.chromium.org/chromium/chromium/src/+/main:media/test/data/bear-audio-10s-VBR-no-TOC.mp3">bear-audio-10s-VBR-no-TOC.mp3</a></td>
-    </tr>
-    <tr>
-      <td>WAV</td>
-      <td><audio controls src="audio/Lock.wav" alt="WAV" onerror="formatError(this)"></audio></td>
-      <td><a href="https://cs.android.com/android/platform/superproject/+/master:frameworks/base/data/sounds/effects/Lock.wav">Lock.wav</a></td>
-    </tr>
-    <tr>
-      <td>OGG</td>
-      <td><audio controls src="audio/Undock.ogg" alt="OGG" onerror="formatError(this)"></audio></td>
-      <td><a href="https://cs.android.com/android/platform/superproject/+/master:frameworks/base/data/sounds/effects/Undock.ogg">Undock.ogg</a></td>
-    </tr>
-  </table>
-
-  <script>
-    // Shows User Agent Header
-    let userAgentText = "<p>User-agent header: " + navigator.userAgent + "</p>";
-    let userAgentEle = document.getElementById("ua_header");
-    userAgentEle.innerHTML = userAgentText;
-
-    // To list not supported formats.
-    function formatError(mediaFile) {
-      var error_box = document.getElementById('error_box');
-      error_box.style.visibility='visible';
-      var error_list = document.getElementById('format_errors');
-      var error_item = document.createElement('li');
-      var alt = mediaFile.attributes.getNamedItem("alt");
-      error_item.innerHTML = alt.value;
-      error_list.insertBefore(error_item, error_list.firstChild);
-    }
-  </script>
+<!-- Credits section -->
+<div class="credits">
+  <!-- Link to the source -->
+  <a target="\_blank" href="https://imgur.com/gallery/KWDca">Digital animal sculptures by Maxim Shkret</a>
+  <a target="\_blank" href="https://theinspirationgrid.com/amazing-digital-illustrations-of-animals-by-maxim-shkret/">Amazing Digital Illustrations of Animals by Maxim Shkret</a>
+</div>
 </html>
