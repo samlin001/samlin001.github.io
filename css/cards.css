@@ -7,6 +7,12 @@
   box-sizing: border-box;
 }
 
+.title {
+  font-size: 3em;
+  margin: 0 0 .3em;
+  color: #6A515E;
+}
+
 body {
   font-family: 'Noto Sans JP', sans-serif;
   background-color: #fef8f8;
