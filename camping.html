@@ -1,14 +1,22 @@
 <!doctype html>
 <html>
-  <!-- Link to the external CSS file -->
-  <link href="css/camping.css" rel="stylesheet" type="text/css" />
-      <iframe
-        width="100%"
-        height="100%"
-        src="https://www.youtube.com/embed/mKCieTImjvU?si=rD5X7xSnMy4B0IIp"
-        title="YouTube video player"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        referrerpolicy="strict-origin-when-cross-origin"
-        ></iframe>
+  <style>
+    body{
+        margin: 0; /* Remove default margin */
+    }
+    iframe{
+        display: block;  /* iframes are inline by default */
+        height: 100vh;  /* Set height to 100% of the viewport height */
+        width: 100vw;  /* Set width to 100% of the viewport width */
+        border: none; /* Remove default border */
+        background: lightyellow; /* Just for styling */
+    }
+  </style>
+  <iframe
+    src="https://www.youtube.com/embed/mKCieTImjvU?si=rD5X7xSnMy4B0IIp"
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerpolicy="strict-origin-when-cross-origin"
+    ></iframe>
 </html>
