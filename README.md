@@ -10,3 +10,8 @@
 
 1. Testing locally: ./tools/runLocalServer.sh
 2. In a browser, open: http://localhost:8000/
+
+Customer Tab: https://developer.chrome.com/docs/android/custom-tabs
+set a better seat positions for the mode
+
+
